@@ -1,4 +1,4 @@
-import Data.List (groupBy, inits, partition, transpose)
+import Data.List (groupBy, inits, partition, transpose, (\\))
 
 type Board = [[Int]]
 
@@ -23,7 +23,7 @@ run draw boards = fst $ foldl go ([], boards) (inits draw)
       (won ++ won'', left')
 
 score :: Draw -> Board -> Int
-score drawn board = sum (map (sum . filter (not . (`elem` drawn))) board) * last drawn
+score drawn board = (sum . (\\ drawn) . concat $ board) * last drawn
 
 isWon :: Draw -> Board -> Bool
 isWon drawn board = go board || go (transpose board)
