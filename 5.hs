@@ -1,9 +1,10 @@
 import Data.Char (isDigit)
 import Data.List (group, sort)
+import X (splitOn)
 
 main :: IO ()
 main = do
-  xs <- map ((\[a, b, c, d] -> (a, b, c, d)) . (map read . words . map (\c -> if isDigit c then c else ' '))) . lines <$> getContents
+  xs <- map ((\[[a, b], [c, d]] -> (a, b, c, d)) . (map (map read . splitOn ",") . splitOn " -> ")) . lines <$> getContents
   let xs' = filter (\(x1, y1, x2, y2) -> x1 == x2 || y1 == y2) xs
   print $ count xs'
   print $ count xs

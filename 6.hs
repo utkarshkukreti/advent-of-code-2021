@@ -1,10 +1,11 @@
 {-# LANGUAGE TupleSections #-}
 
 import qualified Data.IntMap as M
+import X (splitOn)
 
 main :: IO ()
 main = do
-  xs <- map read . words . map (\c -> if c == ',' then ' ' else c) <$> getContents
+  xs <- map read . splitOn "," <$> getContents
   print $ run xs !! 80
   print $ run xs !! 256
 

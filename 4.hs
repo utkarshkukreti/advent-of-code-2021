@@ -1,4 +1,5 @@
 import Data.List (groupBy, inits, partition, transpose, (\\))
+import X (splitOn)
 
 type Board = [[Int]]
 
@@ -6,7 +7,7 @@ type Draw = [Int]
 
 main :: IO ()
 main = do
-  ([a] : b) <- map (filter (not . null)) . groupBy (\a b -> null a && not (null b)) . lines <$> getContents
+  ([a] : b) <- map (splitOn "\n") . splitOn "\n\n" <$> getContents
   let draw = map read . words . map (\c -> if c == ',' then ' ' else c) $ a
   let boards = map (map (map read . words)) b
   let winners = run draw boards
